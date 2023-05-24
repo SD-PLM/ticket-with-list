@@ -29,9 +29,6 @@ String[] options = {"Dine In","Take Out", "Food Delivery"};
         setContentView(R.layout.activity_main);
         additem = findViewById(R.id.additem1);
         listView = findViewById(R.id.listitem);
-        list.add("apple");
-        list.add("banana");
-        list.add("orange");
         listadapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, list);
         listView.setAdapter(listadapter);
 
