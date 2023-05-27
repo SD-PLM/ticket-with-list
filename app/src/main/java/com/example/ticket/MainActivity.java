@@ -1,14 +1,20 @@
 package com.example.ticket;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -16,10 +22,9 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 Spinner dineoptions;
-ListView listView;
-List<String> list = new ArrayList<>();
-ImageButton additem;
-ArrayAdapter listadapter;
+LinearLayout layout;
+Button additem;
+AlertDialog dialog;
 
 String[] options = {"Dine In","Take Out", "Food Delivery"};
 
@@ -27,20 +32,9 @@ String[] options = {"Dine In","Take Out", "Food Delivery"};
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        additem = findViewById(R.id.additem1);
-        listView = findViewById(R.id.listitem);
-        listadapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, list);
-        listView.setAdapter(listadapter);
-
-        additem.setOnClickListener(new View.OnClickListener() {//pareh parang kada onclick listener need ng adapter saka set adapter
-            @Override
-            public void onClick(View v) {
-                list.add("tanginamo");
-                listadapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, list);
-                listView.setAdapter(listadapter);
-            }
-        });
-
+        Button additem = findViewById(R.id.btnadd);
+        buildDialog();
+        LinearLayout container = findViewById(R.id.container);
         dineoptions = findViewById(R.id.spnDineOptions);
         ArrayAdapter<String> adapterdine = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_spinner_item, options);
         adapterdine.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -58,5 +52,53 @@ String[] options = {"Dine In","Take Out", "Food Delivery"};
 
                  }
              });
+             additem.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View v) {
+                     dialog.show();
+                 }
+             });
     }
+
+
+    private void buildDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.dialog, null);
+        EditText nameEdit = (EditText) view.findViewById(R.id.nameEdit);
+        builder.setView(view);
+        builder.setTitle("Enter item")
+        .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                addCard(nameEdit.getText().toString());
+            }
+        }) .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(MainActivity.this, "Canceled", Toast.LENGTH_SHORT).show();
+                    }
+                });
+        dialog = builder.create();
+        }
+
+    public void  addCard(String nameEdit){
+        View inflatedView = getLayoutInflater().inflate(R.layout.card, null);
+        TextView nameView = (TextView) inflatedView.findViewById(R.id.itemname);
+        View view = getLayoutInflater().inflate(R.layout.card,null);
+        ImageButton deleteitem = (ImageButton) inflatedView.findViewById(R.id.deleteitem);
+        LinearLayout layout = (LinearLayout)  findViewById(R.id.container);
+        nameView.setText(nameEdit);
+        view.invalidate();
+
+        deleteitem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                layout.removeView(view);
+                view.invalidate();
+            }
+        });
+        layout.addView(view);
+       
+    }
+
 }

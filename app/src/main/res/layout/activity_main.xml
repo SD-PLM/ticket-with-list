@@ -40,6 +40,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -65,7 +66,7 @@
                     android:dropDownWidth="wrap_content"
                     android:gravity="center"
                     android:spinnerMode="dropdown"
-                    tools:ignore="TouchTargetSizeCheck">
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck">
 
                 </Spinner>
 
@@ -81,21 +82,29 @@
             </View>
         </LinearLayout>
 
-        <ListView
-            android:id="@+id/listitem"
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="210dp"
-            android:divider="@color/black"
-            android:dividerHeight="1dp"
+            android:layout_height="140dp"
+
             android:textAlignment="textStart"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias=".33">
+            app:layout_constraintVertical_bias=".6">
+            <LinearLayout
+                android:id="@+id/container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:divider="@color/black">
 
-        </ListView>
+            </LinearLayout>
+
+
+        </ScrollView>
 
         <Button
             android:id="@+id/button5"
@@ -123,16 +132,20 @@
 
         </Button>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/btnadd"
+            android:layout_width="59dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/purple_200"
+            android:text="Add"
+            android:textSize="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            tools:ignore="TextSizeCheck" />
 
-    <ImageButton
-        android:id="@+id/additem1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/constraintLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ailodsicon" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
