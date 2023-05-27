@@ -10,7 +10,6 @@
         android:layout_height="wrap_content"
         android:hint="Item name"
         android:textSize="18dp"
-        android:inputType="text"
-        android:ems="12"/>
+        android:inputType="text"/>
 
 </RelativeLayout>

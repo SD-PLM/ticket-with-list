@@ -12,18 +12,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity {
 Spinner dineoptions;
-LinearLayout layout;
-Button additem;
+LinearLayout layoutscroll;
 AlertDialog dialog;
 
 String[] options = {"Dine In","Take Out", "Food Delivery"};
@@ -33,8 +28,7 @@ String[] options = {"Dine In","Take Out", "Food Delivery"};
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button additem = findViewById(R.id.btnadd);
-        buildDialog();
-        LinearLayout container = findViewById(R.id.container);
+        layoutscroll= findViewById(R.id.container);
         dineoptions = findViewById(R.id.spnDineOptions);
         ArrayAdapter<String> adapterdine = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_spinner_item, options);
         adapterdine.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -52,25 +46,29 @@ String[] options = {"Dine In","Take Out", "Food Delivery"};
 
                  }
              });
+
+             buildDialog();
              additem.setOnClickListener(new View.OnClickListener() {
                  @Override
                  public void onClick(View v) {
                      dialog.show();
                  }
              });
+
+
     }
 
 
     private void buildDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.dialog, null);
-        EditText nameEdit = (EditText) view.findViewById(R.id.nameEdit);
+        EditText NameEdit = (EditText) view.findViewById(R.id.nameEdit);
         builder.setView(view);
         builder.setTitle("Enter item")
         .setPositiveButton("Add", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                addCard(nameEdit.getText().toString());
+                addCard(NameEdit.getText().toString());
             }
         }) .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
@@ -81,24 +79,23 @@ String[] options = {"Dine In","Take Out", "Food Delivery"};
         dialog = builder.create();
         }
 
-    public void  addCard(String nameEdit){
-        View inflatedView = getLayoutInflater().inflate(R.layout.card, null);
-        TextView nameView = (TextView) inflatedView.findViewById(R.id.itemname);
-        View view = getLayoutInflater().inflate(R.layout.card,null);
-        ImageButton deleteitem = (ImageButton) inflatedView.findViewById(R.id.deleteitem);
-        LinearLayout layout = (LinearLayout)  findViewById(R.id.container);
-        nameView.setText(nameEdit);
-        view.invalidate();
+    public void addCard(String NameEdit) {
+        View view = getLayoutInflater().inflate(R.layout.card, null);
+        TextView nameView = view.findViewById(R.id.itemname);
+        View view1 = getLayoutInflater().inflate(R.layout.card,null);
+        ImageButton deleteitem = (ImageButton) view.findViewById(R.id.deleteitem);
+
+        nameView.setText((String) NameEdit);
+        view1.invalidate();
 
         deleteitem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                layout.removeView(view);
-                view.invalidate();
+                layoutscroll.removeView(view);
+                Toast.makeText(MainActivity.this, "gumagana naman lods", Toast.LENGTH_SHORT).show();
             }
         });
-        layout.addView(view);
-       
+        layoutscroll.addView(view);
     }
 
 }
